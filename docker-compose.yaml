@@ -38,33 +38,5 @@ services:
     env_file:
       - .env
 
-  celery:
-    build: .
-    tty: true
-    command: sh -c "poetry run celery -A app worker -l INFO"
-    restart: on-failure
-    volumes:
-      - .:/app
-    depends_on:
-      - redis
-      - db
-      - app
-    env_file:
-      - .env
-
-  celery-beat:
-    build: .
-    tty: true
-    command: sh -c "poetry run celery -A app beat -l INFO"
-    restart: on-failure
-    volumes:
-      - .:/app
-    depends_on:
-      - redis
-      - db
-      - app
-    env_file:
-      - .env
-
 volumes:
   pg_data:

@@ -1,11 +1,21 @@
-from rest_framework import generics
+from rest_framework.generics import (
+    ListAPIView,
+    CreateAPIView,
+    RetrieveUpdateDestroyAPIView,
+)
 from rest_framework.permissions import AllowAny
 from users.models import User
 from users.serializers import UserSerializer
 
 
-class UserCreateAPIView(generics.CreateAPIView):
+class UserListApiView(ListAPIView):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+
+class UserCreateAPIView(CreateAPIView):
     """Класс для создания пользователя"""
+
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
 
@@ -15,8 +25,9 @@ class UserCreateAPIView(generics.CreateAPIView):
         user.save()
 
 
-class UserDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+class UserDetailAPIView(RetrieveUpdateDestroyAPIView):
     """Класс для просмотра, изменения и удаления пользователя"""
+
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
